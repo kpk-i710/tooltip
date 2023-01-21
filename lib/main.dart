@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() {
   runApp(const MyApp());
 }
-String textGlobal = "1:1 С именем1 Аллаха2, Милостивого3 Милосердного4.";
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -33,21 +33,24 @@ Future<List<Two>> getTranslate() async {
   await Future.delayed(const Duration(seconds: 2), () {});
 
   List<Two> name = [
-    for (int i = 0; i < textGlobal.length; i++)
-      Two(title: textGlobal[i], tip: await getTrans(searched: textGlobal[i]))
+    for (int i = 0; i < textGlobal.split(" ").length; i++)
+      Two(title: textGlobal.split(" ")[i], tip: await getTrans(searched: textGlobal.split(" ")[i]))
   ];
 
   return name;
 }
-
+String textGlobal = "1:1 С именем1 Аллаха2, Милостивого3 Милосердного4.";
 Future<String> getTrans({required String searched}) async {
   if (searched.contains("1")) {
     return "1имя [персональное название] (اسم): 2:31, 2:33, 2:114…";
   }
-  if (searched.contains("3")) {
+  if (searched.contains("2")) {
     return "2Аллах [нет чего-либо подобного Ему, см. 42:11. Однокоренное слово «Бог» указано в 2:133] (الله): 1:2, 2:7-2:10, 2:15, 2:17, 2:19, 2:20, 2:22, 2:23, 2:26-2:28, 2:55…";
   }
-  return "нету";
+  if (searched.contains("3")) {
+    return "3Аллах [нет чего-либо подобного Ему, см. 42:11. Однокоренное слово «Бог» указано в 2:133] (الله): 1:2, 2:7-2:10, 2:15, 2:17, 2:19, 2:20, 2:22, 2:23, 2:26-2:28, 2:55…";
+  }
+  return "";
 }
 
 class Home extends ConsumerStatefulWidget {
@@ -78,7 +81,7 @@ class _HomeState extends ConsumerState<Home> {
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Tooltip(
                                   triggerMode: TooltipTriggerMode.tap,
-                                  message: "подсказка ${data[index].tip}",
+                                  message: "${data[index].tip}",
                                   child: Text(textGlobal.split(" ")[index])),
                             ))),
                 error: (error, stack) => Text("sdf"),
